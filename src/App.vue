@@ -1,12 +1,24 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <div id="nav">
+                    <router-link to='/'>Home</router-link>
+                    <router-link to='/companies'>Companies</router-link>
+                </div>
+            </el-header>
+            <el-main>
+                <router-view />
+            </el-main>
+        </el-container>
     </div>
-    <router-view/>
-  </div>
 </template>
+
+<script>
+export default {
+  name: 'app'
+};
+</script>
 
 <style lang="scss">
 #app {
@@ -21,6 +33,9 @@
   a {
     font-weight: bold;
     color: #2c3e50;
+    &:first-child {
+      margin-right: 20px;
+    }
     &.router-link-exact-active {
       color: #42b983;
     }
