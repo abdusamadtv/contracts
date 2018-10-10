@@ -20,13 +20,14 @@ export default class Resource {
    * @returns {Promise}
    */
   find(id) {
-    const filtered = this.data.filter(el => el.id === id);
+    const item = this.data.find(el => el.id === id);
+
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (filtered.length === 0) {
-          reject('not found');
+        if (item === undefined) {
+          reject('Not found');
         } else {
-          resolve(this._clone(filtered[0]));
+          resolve(this._clone(item));
         }
       }, 100);
     });
@@ -35,20 +36,18 @@ export default class Resource {
   /**
    * Performs batch select from the data array
    * @param field {string} Column name
-   * @param values {[]} List of possible column values
+   * @param values {array} List of possible column values
    * @param page {int} Page index starting from 0
    * @param perPage {int} Rows per page
    * @param orderBy? {string} Column name to sort with (ASC)
    * @returns {Promise}
    */
   getBatch(field, values, page = 0, perPage = 5, orderBy = 'id') {
-    return this._promise(
-      this._paginate(
-        this._orderBy(this.data.filter(el => values.indexOf(el[field]) !== -1), orderBy),
-        page,
-        perPage
-      )
-    );
+    const filtered = this.data.filter(el => values.includes(el[field]));
+    const oredered = this._orderBy(filtered, orderBy);
+    const result = this._paginate(oredered, page, perPage);
+
+    return this._promise(result);
   }
 
   /**
@@ -59,7 +58,10 @@ export default class Resource {
    * @returns {Promise}
    */
   list(page = 0, perPage = 5, orderBy = 'id') {
-    return this._promise(this._paginate(this._orderBy(this.data, orderBy), page, perPage));
+    const oredered = this._orderBy(this.data, orderBy);
+    const result = this._paginate(oredered, page, perPage);
+
+    return this._promise(result);
   }
 
   /**
@@ -70,17 +72,12 @@ export default class Resource {
   update(object) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        let idx = -1;
-        for (let i = 0; i < this.data.length; i++) {
-          if (this.data[i].id === object.id) {
-            idx = i;
-            break;
-          }
-        }
-        if (idx === -1) {
+        const index = this.data.findIndex(el => el.id === object.id);
+
+        if (index === -1) {
           reject('not found');
         } else {
-          this.data[idx] = object;
+          this.data[index] = object;
           resolve(object);
         }
       }, 200);
@@ -95,10 +92,10 @@ export default class Resource {
    * @private
    */
   _paginate(arr, page, perPage) {
-    if (perPage > 5) {
-      perPage = 5;
-    }
-    const result = this._cloneAll(arr.slice(page * perPage, (page + 1) * perPage));
+    perPage = 5; // "Maximum page size is 5 elements" (from Features and limitations);
+    const paginatedArr = arr.slice(page * perPage, (page + 1) * perPage);
+    const result = this._cloneAll(paginatedArr);
+
     return {
       data: result,
       meta: {
@@ -118,9 +115,12 @@ export default class Resource {
    * @private
    */
   _orderBy(arr, attr) {
+    // I offer to make descending sorting too
+
     return arr.sort((a, b) => {
       if (a[attr] < b[attr]) return -1;
       if (a[attr] > b[attr]) return 1;
+
       return 0;
     });
   }
@@ -143,11 +143,7 @@ export default class Resource {
    * @private
    */
   _cloneAll(arr) {
-    let cloned = [];
-    for (let i = 0; i < arr.length; i++) {
-      cloned.push(this._clone(arr[i]));
-    }
-    return cloned;
+    return arr.map(item => this._clone(item));
   }
 
   /**
@@ -157,10 +153,6 @@ export default class Resource {
    * @private
    */
   _clone(obj) {
-    const copy = obj.constructor();
-    for (const attr in obj) {
-      if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-    }
-    return copy;
+    return { ...obj };
   }
 }
