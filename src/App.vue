@@ -3,7 +3,6 @@
     <el-container>
       <el-header>
         <div id="nav">
-          <router-link to="/">Home</router-link>
           <router-link to="/companies">Companies</router-link>
         </div>
       </el-header>
@@ -33,9 +32,6 @@ export default {
   a {
     font-weight: bold;
     color: #2c3e50;
-    &:first-child {
-      margin-right: 20px;
-    }
     &.router-link-exact-active {
       color: #42b983;
     }
