@@ -10,7 +10,7 @@ export default [
     cid: 6,
     number: 'CNT-12-33,11-A',
     signed_at: '2017-12-30',
-    valid_till: '2018-12-30'
+    valid_till: '2018-12-30',
   },
   { id: 7, sid: 1, cid: 9, number: 'NU-22-AME', signed_at: '2015-04-22', valid_till: '2019-04-22' },
   { id: 8, sid: 2, cid: 4, number: 'JA-MM-11', signed_at: '2014-01-12', valid_till: '2017-01-12' },
@@ -21,7 +21,7 @@ export default [
     cid: 3,
     number: 'KA-33-20223441',
     signed_at: '2017-10-09',
-    valid_till: '2019-10-09'
+    valid_till: '2019-10-09',
   },
   { id: 11, sid: 2, cid: 3, number: 'AM-66', signed_at: '2017-03-16', valid_till: '2018-03-16' },
   { id: 12, sid: 3, cid: 6, number: 'AA-1', signed_at: '2012-04-13', valid_till: '2013-04-13' },
@@ -41,7 +41,7 @@ export default [
     cid: 1,
     number: 'MMA-WBR-1',
     signed_at: '2017-04-26',
-    valid_till: '2019-04-26'
+    valid_till: '2019-04-26',
   },
   { id: 24, sid: 8, cid: 3, number: 'MA_22', signed_at: '2013-11-26', valid_till: '2014-11-26' },
   {
@@ -50,7 +50,7 @@ export default [
     cid: 4,
     number: 'OK_OOPS_1',
     signed_at: '2015-05-16',
-    valid_till: '2019-05-16'
+    valid_till: '2019-05-16',
   },
   { id: 26, sid: 9, cid: 2, number: '11', signed_at: '2014-03-22', valid_till: '2019-03-22' },
   { id: 27, sid: 9, cid: 1, number: '4', signed_at: '2017-03-17', valid_till: '2018-03-17' },
@@ -61,6 +61,6 @@ export default [
     cid: 6,
     number: 'ME-COM (22)',
     signed_at: '2018-06-21',
-    valid_till: '2019-06-21'
-  }
-];
+    valid_till: '2019-06-21',
+  },
+]

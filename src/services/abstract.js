@@ -3,7 +3,7 @@ export default class Resource {
    * @param data {Object[]}
    */
   constructor(data) {
-    this.data = data;
+    this.data = data
   }
 
   /**
@@ -11,7 +11,7 @@ export default class Resource {
    * @returns {Promise}
    */
   getTotal() {
-    return this._promise(this.data.length);
+    return this._promise(this.data.length)
   }
 
   /**
@@ -20,17 +20,17 @@ export default class Resource {
    * @returns {Promise}
    */
   find(id) {
-    const item = this.data.find(el => el.id === id);
+    const item = this.data.find(el => el.id === id)
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (item === undefined) {
-          reject('Not found');
+          reject('Not found')
         } else {
-          resolve(this._clone(item));
+          resolve(this._clone(item))
         }
-      }, 100);
-    });
+      }, 100)
+    })
   }
 
   /**
@@ -43,11 +43,11 @@ export default class Resource {
    * @returns {Promise}
    */
   getBatch(field, values, page = 0, perPage = 5, orderBy = 'id') {
-    const filtered = this.data.filter(el => values.includes(el[field]));
-    const oredered = this._orderBy(filtered, orderBy);
-    const result = this._paginate(oredered, page, perPage);
+    const filtered = this.data.filter(el => values.includes(el[field]))
+    const oredered = this._orderBy(filtered, orderBy)
+    const result = this._paginate(oredered, page, perPage)
 
-    return this._promise(result);
+    return this._promise(result)
   }
 
   /**
@@ -58,10 +58,10 @@ export default class Resource {
    * @returns {Promise}
    */
   list(page = 0, perPage = 5, orderBy = 'id') {
-    const oredered = this._orderBy(this.data, orderBy);
-    const result = this._paginate(oredered, page, perPage);
+    const oredered = this._orderBy(this.data, orderBy)
+    const result = this._paginate(oredered, page, perPage)
 
-    return this._promise(result);
+    return this._promise(result)
   }
 
   /**
@@ -72,16 +72,16 @@ export default class Resource {
   update(object) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const index = this.data.findIndex(el => el.id === object.id);
+        const index = this.data.findIndex(el => el.id === object.id)
 
         if (index === -1) {
-          reject('not found');
+          reject('not found')
         } else {
-          this.data[index] = object;
-          resolve(object);
+          this.data[index] = object
+          resolve(object)
         }
-      }, 200);
-    });
+      }, 200)
+    })
   }
 
   /**
@@ -92,9 +92,9 @@ export default class Resource {
    * @private
    */
   _paginate(arr, page, perPage) {
-    perPage = 5; // "Maximum page size is 5 elements" (from Features and limitations);
-    const paginatedArr = arr.slice(page * perPage, (page + 1) * perPage);
-    const result = this._cloneAll(paginatedArr);
+    perPage = 5 // "Maximum page size is 5 elements" (from Features and limitations);
+    const paginatedArr = arr.slice(page * perPage, (page + 1) * perPage)
+    const result = this._cloneAll(paginatedArr)
 
     return {
       data: result,
@@ -102,9 +102,9 @@ export default class Resource {
         total: arr.length,
         page: page,
         per_page: perPage,
-        items: result.length
-      }
-    };
+        items: result.length,
+      },
+    }
   }
 
   /**
@@ -118,11 +118,11 @@ export default class Resource {
     // I offer to make descending sorting too
 
     return arr.sort((a, b) => {
-      if (a[attr] < b[attr]) return -1;
-      if (a[attr] > b[attr]) return 1;
+      if (a[attr] < b[attr]) return -1
+      if (a[attr] > b[attr]) return 1
 
-      return 0;
-    });
+      return 0
+    })
   }
 
   /**
@@ -133,7 +133,7 @@ export default class Resource {
    * @private
    */
   _promise(result, timeout = 100) {
-    return new Promise(resolve => setTimeout(() => resolve(result), timeout));
+    return new Promise(resolve => setTimeout(() => resolve(result), timeout))
   }
 
   /**
@@ -143,7 +143,7 @@ export default class Resource {
    * @private
    */
   _cloneAll(arr) {
-    return arr.map(item => this._clone(item));
+    return arr.map(item => this._clone(item))
   }
 
   /**
@@ -153,6 +153,6 @@ export default class Resource {
    * @private
    */
   _clone(obj) {
-    return { ...obj };
+    return { ...obj }
   }
 }

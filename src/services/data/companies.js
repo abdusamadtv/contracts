@@ -8,5 +8,5 @@ export default [
   { id: 7, name: 'Cisco' },
   { id: 8, name: 'Alibaba' },
   { id: 9, name: 'Samsung' },
-  { id: 10, name: 'Xiaomi' }
-];
+  { id: 10, name: 'Xiaomi' },
+]

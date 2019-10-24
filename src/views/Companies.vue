@@ -6,9 +6,10 @@
       <el-table-column label="Contracts" width="180">
         <template slot-scope="scope">
           <router-link
-            :to="{name: 'contracts', params: { companyId: scope.row.id }}"
+            :to="{ name: 'contracts', params: { companyId: scope.row.id } }"
             class="router-link el-button el-button--primary el-button--mini is-round"
-          >Contracts</router-link>
+            >Contracts</router-link
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -23,35 +24,35 @@
 </template>
 
 <script>
-import { Companies } from "@/services/resources";
+import { Companies } from '@/services/resources'
 
-const companies = new Companies();
+const companies = new Companies()
 
 export default {
-  name: "Companies",
+  name: 'Companies',
   data() {
     return {
       currentPage: 1,
       totalItems: 0,
-      companies: []
-    };
+      companies: [],
+    }
   },
   methods: {
     handleCurrentPageChange(val) {
-      this.currentPage = val;
-      this.getCompanies();
+      this.currentPage = val
+      this.getCompanies()
     },
     async getCompanies() {
-      await companies.list(this.currentPage - 1, 5, "name").then(resp => {
-        this.companies = resp.data;
-        this.totalItems = resp.meta.total;
-      });
-    }
+      await companies.list(this.currentPage - 1, 5, 'name').then(resp => {
+        this.companies = resp.data
+        this.totalItems = resp.meta.total
+      })
+    },
   },
   created() {
-    this.getCompanies();
-  }
-};
+    this.getCompanies()
+  },
+}
 </script>
 
 <style lang="scss">

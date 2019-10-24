@@ -66,82 +66,76 @@
 </template>
 
 <script>
-import moment from "moment";
-import { Contracts } from "@/services/resources";
+import moment from 'moment'
+import { Contracts } from '@/services/resources'
 
-const contracts = new Contracts();
+const contracts = new Contracts()
 
 export default {
-  name: "Contracts",
+  name: 'Contracts',
   data() {
     return {
       currentPage: 1,
-      currentType: "sold",
+      currentType: 'sold',
       currentContract: {},
       soldItemsTotal: 0,
       soldContracts: [],
       purchasedItemsTotal: 0,
       purchasedContracts: [],
-      editContractDialog: false
-    };
+      editContractDialog: false,
+    }
   },
   computed: {
     currentContracts() {
-      return this.currentType === "sold"
-        ? this.soldContracts
-        : this.purchasedContracts;
+      return this.currentType === 'sold' ? this.soldContracts : this.purchasedContracts
     },
     currentItemsTotal() {
-      return this.currentType === "sold"
-        ? this.soldItemsTotal
-        : this.purchasedItemsTotal;
-    }
+      return this.currentType === 'sold' ? this.soldItemsTotal : this.purchasedItemsTotal
+    },
   },
   watch: {
     currentType() {
-      this.currentPage = 1;
-      this.getContracts(this.currentType);
-    }
+      this.currentPage = 1
+      this.getContracts(this.currentType)
+    },
   },
   methods: {
     async saveContract(contract) {
-      let signedAt = contract.signed_at;
-      let validTill = contract.valid_till;
+      let signedAt = contract.signed_at
+      let validTill = contract.valid_till
 
-      contract.signed_at = moment(signedAt).format("YYYY-MM-DD");
-      contract.valid_till = moment(validTill).format("YYYY-MM-DD");
+      contract.signed_at = moment(signedAt).format('YYYY-MM-DD')
+      contract.valid_till = moment(validTill).format('YYYY-MM-DD')
 
-      await contracts.update(contract).then(resp => {
-        this.editContractDialog = false;
-      });
+      await contracts.update(contract).then(() => {
+        this.editContractDialog = false
+      })
     },
     closeEditDialog() {
-      this.editContractDialog = false;
+      this.editContractDialog = false
     },
     showEditDialog(contract) {
-      this.currentContract = contract;
-      this.editContractDialog = true;
+      this.currentContract = contract
+      this.editContractDialog = true
     },
     handleCurrentPageChange(val) {
-      this.currentPage = val;
-      this.getContracts(this.currentType);
+      this.currentPage = val
+      this.getContracts(this.currentType)
     },
     async getContracts(type) {
-      let companyId = Number(this.$route.params.companyId);
-      let column = this.currentType === "sold" ? "sid" : "cid";
+      let companyId = Number(this.$route.params.companyId)
+      let column = this.currentType === 'sold' ? 'sid' : 'cid'
 
-      await contracts
-        .getBatch(column, [companyId], this.currentPage - 1, 5, "number")
-        .then(resp => {
-          this[`${type}Contracts`] = resp.data;
-          this[`${type}ItemsTotal`] = resp.meta.total;
-        });
-    }
+      await contracts.getBatch(column, [companyId], this.currentPage - 1, 5, 'number').then(resp => {
+        this[`${type}Contracts`] = resp.data
+        this[`${type}ItemsTotal`] = resp.meta.total
+      })
+    },
   },
   created() {
-    this.getContracts(this.currentType);
-  }
-};
+    this.getContracts(this.currentType)
+  },
+}
 </script>
 
 <style lang="scss">
