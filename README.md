@@ -1,5 +1,7 @@
 # Company contracts
 
+Test task performed in two stages. https://bitbucket.org/oberonus/fe-testcase/src
+
 ## Project setup
 
 ```
