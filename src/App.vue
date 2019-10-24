@@ -1,28 +1,29 @@
 <template>
-    <div id="app">
-        <el-container>
-            <el-header>
-                <div id="nav">
-                    <router-link to='/'>Home</router-link>
-                    <router-link to='/companies'>Companies</router-link>
-                </div>
-            </el-header>
-            <el-main>
-                <router-view />
-            </el-main>
-        </el-container>
-    </div>
+  <div id="app">
+    <el-container>
+      <el-header>
+        <div id="nav">
+          <router-link to="/">Home</router-link>
+          <router-link to="/companies">Companies</router-link>
+        </div>
+      </el-header>
+      <el-main>
+        <router-view />
+      </el-main>
+    </el-container>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: "app"
 };
 </script>
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
